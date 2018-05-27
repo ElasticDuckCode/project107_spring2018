@@ -6,7 +6,7 @@ def main():
 
     squareNumberN = int(input("How many squares to descretize into (give n in 4^n): "))
     squareNumber = 4**squareNumberN
-    print(squareNumber)
+    print(squareNumber)  # FOR DEGBUGGING
 
 main()
 
