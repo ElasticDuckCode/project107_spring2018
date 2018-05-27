@@ -13,11 +13,20 @@ def getNumberOfSquares():
 def main():
     w = 1e-2  # width of capacitor
     d = 3e-3  # distance between capacitor plates
+    capCoord = []
 
     squareNumber = getNumberOfSquares(); print(squareNumber, " -> number of squares")  # FOR DEGBUGGING
-
     dx = ((w**2) / squareNumber)**(1/2); print(dx, " -> dx value")  # FOR DEGBUGGING
     return 0
+
+#creating array of 0's for later use
+def createCap(capCoord): 
+	for i in range(0,squareNumber):
+		capCoord.append(0 0 0)
+
+def calcDist(capCoord):
+	for i in range(0,squareNumber):
+		capCoord[]
 
 
 main()
