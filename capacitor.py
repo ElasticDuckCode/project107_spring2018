@@ -18,6 +18,20 @@ def printMatrix(matrix, rowMax, columnMax):
         print("]", end="\n")
     return
 
+def calcCoord(array, x, y, dx, z):
+    # Calculates the discritized coordinates of the capacitor
+    xpos = 0 
+    ypos = 0
+
+    for i in range(0, x):
+        for j in range(0, y):
+            array.append([xpos, ypos, z])
+            xpos = xpos + dx
+        ypos = ypos + dx
+        xpos = 0
+
+## MAIN FUNCTION ######################################################################################################
+
 def main():
     w = 1e-2  # width of capacitor
     d = 3e-3  # distance between capacitor plates
@@ -25,29 +39,15 @@ def main():
     squareNumber = getNumberOfSquares(); print(squareNumber, " -> number of squares")  # FOR DEGBUGGING
     sqaureInRow = int(squareNumber**(1/2))
     dx = ((w**2) / squareNumber)**(1/2); print(dx, " -> dx value")  # FOR DEGBUGGING
+    print("")
 
     capCoord = []
-    calcCoordBottom(capCoord, sqaureInRow, sqaureInRow, dx)
-    print(capCoord)
+    calcCoord(capCoord, sqaureInRow, sqaureInRow, dx, 0)
+    calcCoord(capCoord, sqaureInRow, sqaureInRow, dx, d)
+    for s in capCoord:
+        print(*s)
 
     return 0
-
-#creating array of 0's for later use
-def createCap(capCoord, squareNumber): 
-	for i in range(0,squareNumber):
-            capCoord.append([0,0,0])
-            print(capCoord)
-
-def calcCoordBottom(array, x, y, dx):
-    xpos = 0
-    ypos = 0
-    for i in range(0, x):
-        for j in range(0, y):
-            array.append([xpos, ypos, 0])
-            xpos = xpos + dx
-        ypos = ypos + dx
-        xpos = 0
-
 
 
 main()
