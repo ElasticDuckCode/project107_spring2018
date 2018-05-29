@@ -54,7 +54,6 @@ def getZMatrix():
 def getvVector(Coord, squareNumber, v0, dBot, dTop):
     # TODO similar to Z matrix
     v = np.zeros(2*squareNumber) # 2 * squareNumber because doing top and bottom surfaces
-    print(v, "getV Zeroes\n")
     for i in range(0, 2*squareNumber):
         if Coord[i][2] == dBot:
             v[i] = -v0 / 2

@@ -20,7 +20,6 @@ def main():
     print(capCoord, "Python List\n")
     print(v, "Volage Vector\n")
 
-    
 
     return 0
 
