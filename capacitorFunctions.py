@@ -19,7 +19,7 @@ def printTitle():
 
 def getNumberOfSquares():  # Obtains numerical input x from the user, and returns 4**x if valid. Otherwise returns 0
     squareNumberN = int(input("Give a positive integer (n) for 4^(n) discrete segments of the capacitor surface > "))
-    if squareNumberN <= 0:
+    if squareNumberN < 0:
         print("Can't do such a calculation.")
         return 0
     else:
