@@ -4,6 +4,8 @@ from capacitorFunctions import *
 
 ## MAIN FUNCTION ######################################################################################################
 
+# Written By Jake Millhiser & Lina Yi
+
 def main():
     w = 1e-2  # width of capacitor
     d = 3e-3  # distance between capacitor plates
