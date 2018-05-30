@@ -1,19 +1,34 @@
+#!/usr/bin/env python3
 import math
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 
+def printTitle():
+    print("\nWritten by Jake Millhiser and Lina Yi.",
+          "\nECE 107 Project: Discrete Capacitance of Square Capacitor"
+          "\nMay 2018\n")
+    try:
+        image = open('img.txt','r')
+    except IOError:
+        pass
+    else:
+        imageLd = image.read()
+        print(imageLd)
+        image.close()
 
-def getNumberOfSquares():
-    # Obtains numerical input (x) from the user, and returns 4**x
-    squareNumberN = int(input("How many squares to descretize a surface into (give n in 4^n): "))
+
+def getNumberOfSquares():  # Obtains numerical input x from the user, and returns 4**x if valid. Otherwise returns 0
+    squareNumberN = int(input("Give a positive integer (n) for 4^(n) discrete segments of the capacitor surface > "))
     if squareNumberN <= 0:
         print("Can't do such a calculation.")
         return 0
     else:
         return  4**squareNumberN
 
-def printMatrix(matrix, rowMax, columnMax):
-    # prints integer matrix in a near manner
+def printMatrix(matrix, rowMax, columnMax):  # prints python list as a matrix in a neat manner
+    # matrix:  python list
+    # rowMax:  largest row index
+    # column max:  largest column index
     for row in range(0, rowMax):
         print("[ ", end="")
         for column in range(0, columnMax):
@@ -21,11 +36,16 @@ def printMatrix(matrix, rowMax, columnMax):
         print("]", end="\n")
     return
 
-def calcCoord(x, y, zBot, zTop, dx):
-    # Calculates the discritized coordinates of the capacitor
+def calcCoord(x, y, zBot, zTop, dx):  # Calculates the discrete coordinates of the capacitor segments
+    # x:  length of capacitor plate
+    # y:  width of capactior plate
+    # zBot:  z coordinate of bottom plate
+    # zTop:  z coordinate of top plate
+    # dx:  step value for plate creation
+
+    array = [] # make list for appending coordinates
     xpos = 0 
     ypos = 0
-    array = []
 
     for i in range(0, x):
         for j in range(0, y):
@@ -36,7 +56,6 @@ def calcCoord(x, y, zBot, zTop, dx):
 
     xpos = 0 
     ypos = 0
-
     for i in range(0, x):
         for j in range(0, y):
             array.append([xpos, ypos, zTop])
@@ -44,15 +63,21 @@ def calcCoord(x, y, zBot, zTop, dx):
         ypos = ypos + dx
         xpos = 0
 
-    array = np.array(array) # return numpy array instead of python list
+    array = np.array(array) # return numpy array instead of list
     return array
 
-def getZMatrix():
+def getZMatrix():  # Creates the Z Matrix in descretized capacitance equation
     # TODO Lina
     return Z
 
-def getvVector(Coord, squareNumber, v0, dBot, dTop):
-    # TODO similar to Z matrix
+def getvVector(Coord, squareNumber, v0, dBot, dTop):  # Creates the voltage vector of both the top and bottom surfaces.
+    # Coord:  coordinate matrix 
+    # squareNumber:  number of squares on one surface
+    # v0:  voltage difference between the two plates
+    # dBot:  position of bottom plate
+    # dTop:  position of the top plate
+
+    # Top voltage is assigned v0/2, bottom voltage assigned -v0/2
     v = np.zeros(2*squareNumber) # 2 * squareNumber because doing top and bottom surfaces
     for i in range(0, 2*squareNumber):
         if Coord[i][2] == dBot:
@@ -62,11 +87,11 @@ def getvVector(Coord, squareNumber, v0, dBot, dTop):
     return v
 
 def solveCharge(Z, v):
-    # Z = descretized matrix (numpy array)
-    # v = voltage vector (numpy array)
+    # Z:  descretized matrix (numpy array)
+    # v:  voltage vector (numpy array)
+
     # equation: v = Zq
     # solution: q = Z^-1 v
-
     try: # test invertibility of Z
         Zinv = np.linalg.inv(Z)
     except np.linalg.LinAlgError:
