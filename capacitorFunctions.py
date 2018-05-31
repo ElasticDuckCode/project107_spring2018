@@ -23,7 +23,8 @@ def printTitle():
     return
 
 
-def getNumberOfSquares():  # Obtains numerical input x from the user, and returns 4**x if valid. Otherwise returns 0
+def getNumberOfSquares():
+    # Obtains numerical input x from the user, and returns 4**x if valid. Otherwise returns 0
     squareNumberN = int(input("Give a positive integer (n) for 4^(n) discrete segments of the capacitor surface > "))
     if squareNumberN < 0:
         print("Can't do such a calculation.")
@@ -31,7 +32,8 @@ def getNumberOfSquares():  # Obtains numerical input x from the user, and return
     else:
         return  4**squareNumberN
 
-def printMatrix(matrix, rowMax, columnMax):  # prints python list as a matrix in a neat manner
+def printMatrix(matrix, rowMax, columnMax): 
+    # Prints python list as a matrix in a neat manner
     # matrix:  python list
     # rowMax:  largest row index
     # column max:  largest column index
@@ -42,7 +44,8 @@ def printMatrix(matrix, rowMax, columnMax):  # prints python list as a matrix in
         print("]", end="\n")
     return
 
-def calcCoord(x, y, zBot, zTop, dx):  # Calculates the discrete coordinates of the capacitor segments
+def calcCoord(x, y, zBot, zTop, dx): 
+    # Calculates the discrete coordinates of the capacitor segments
     # x:  length of capacitor plate
     # y:  width of capactior plate
     # zBot:  z coordinate of bottom plate
@@ -72,7 +75,8 @@ def calcCoord(x, y, zBot, zTop, dx):  # Calculates the discrete coordinates of t
     array = np.array(array) # return numpy array instead of list
     return array
 
-def getZMatrix(squareNumber, Coord, dx):  # Creates the Z Matrix in descretized capacitance equation
+def getZMatrix(squareNumber, Coord, dx):
+    # Creates the Z Matrix in descretized capacitance equation
     # squareNumber: number of squares on one surface
     # Coord: coordinate array
     # dx: discrete square width
@@ -89,7 +93,8 @@ def getZMatrix(squareNumber, Coord, dx):  # Creates the Z Matrix in descretized 
                 Z[m][n] = 1/(4*(np.pi)*Eo*r)
     return Z
 
-def getvVector(Coord, squareNumber, v0, dBot, dTop):  # Creates the voltage vector of both the top and bottom surfaces.
+def getvVector(Coord, squareNumber, v0, dBot, dTop):
+    # Creates the voltage vector of both the top and bottom surfaces.
     # Coord:  coordinate matrix 
     # squareNumber:  number of squares on one surface
     # v0:  voltage difference between the two plates
