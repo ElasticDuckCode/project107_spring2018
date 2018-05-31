@@ -133,8 +133,8 @@ def solveCapacitance(q, v0, squareNumber):
     # squareNumber: number of squares on a plate
 
     Q = 0 # total charge on plate initally 0
-    for dankmemes in range(squareNumber):
-        Q = Q + q[dankmemes]
+    for i in range(squareNumber):
+        Q = Q + q[i]
     C = -Q/v0 # negate Q since we are summing charges on bottom plate rather than top
     return C
 
