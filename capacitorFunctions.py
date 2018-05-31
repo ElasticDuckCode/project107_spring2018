@@ -4,7 +4,9 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
+# Global Variables
 Eo = 8.85e-12 # of free space
+
 
 def printTitle():
     print("\nWritten by Jake Millhiser and Lina Yi.",
@@ -71,6 +73,10 @@ def calcCoord(x, y, zBot, zTop, dx):  # Calculates the discrete coordinates of t
     return array
 
 def getZMatrix(squareNumber, Coord, dx):  # Creates the Z Matrix in descretized capacitance equation
+    # squareNumber: number of squares on one surface
+    # Coord: coordinate array
+    # dx: discrete square width
+
     Z = np.zeros((2*squareNumber,2*squareNumber))
     dSn = (dx)**2
 
@@ -102,9 +108,9 @@ def getvVector(Coord, squareNumber, v0, dBot, dTop):  # Creates the voltage vect
 def solveCharge(Z, v):
     # Z:  descretized matrix (numpy array)
     # v:  voltage vector (numpy array)
-
     # equation: v = Zq
     # solution: q = Z^-1 v
+
     try: # test invertibility of Z
         Zinv = np.linalg.inv(Z)
     except np.linalg.LinAlgError:
@@ -134,6 +140,7 @@ def solveChargeMatrix(q, squareNumber, squareInRow):
     #|7|8|9|
     #|4|5|6| how our charges are aranged
     #|1|2|3|
+
     k = 0 # current vector index
     Q = np.zeros((squareInRow, squareInRow))
     for i in range(squareInRow-1, -1, -1): # from squareNumber-1 to 0
@@ -143,37 +150,41 @@ def solveChargeMatrix(q, squareNumber, squareInRow):
     return Q
 
 def surfColorPlt(A):
-    # Heat Map
-    #A = np.random.random((size, size))
+    # A: 2d array
+
     plt.imshow(A, cmap='plasma',interpolation='gaussian')
     plt.colorbar()
     plt.show()
     return
 
 def surf3DPlt(A, squareInRow):
-# Surface Plot
+    # A: square array
+    # squareInRow: how many elements per row/column
+
     fig = plt.figure()
     ax = fig.gca(projection='3d')
-
     x = y = np.arange(squareInRow)
     x, y = np.meshgrid(x, y)
     surf =  ax.plot_surface(x,y,A, color='orange')
-#fig.colorbar(surf, shrink=0.5, aspect=5)
     plt.show()
+    return
 
 def solveDiscrete(w, d, v0, surfaceOn, squareNumber):
-    # graph: tells what graph to plot
+    # w: square plate width
+    # d: separation distance
+    # sufraceOn: tells what graph to plot
+    # squareNumber: number of squares on one surface
 
     squareInRow = int(squareNumber**(1/2))  # Set the number of sqares per row
     dx = ((w**2) / squareNumber)**(1/2)  # Turns number of squares into dx distance
-    capCoord = calcCoord(squareInRow, squareInRow, 0, d, dx)  # calculate descritized coordinates (bottom surface)
+    capCoord = calcCoord(squareInRow, squareInRow, 0, d, dx)  # calculate descritized coordinates
 
-    v = getvVector(capCoord, squareNumber, v0, 0, d)
-    Z = getZMatrix(squareNumber, capCoord, dx)
-    Q = solveCharge(Z,v)
-    C = solveCapacitance(Q, v0, squareNumber)
+    v = getvVector(capCoord, squareNumber, v0, 0, d) # create voltage vector
+    Z = getZMatrix(squareNumber, capCoord, dx) # create Z matrix
+    Q = solveCharge(Z,v) # invert Z and solve for Q vector
+    C = solveCapacitance(Q, v0, squareNumber) # compute total capacitance
 
-    if surfaceOn == 1:
+    if surfaceOn == 1: # plot surface only if 1
             Q0 = solveChargeMatrix(Q, squareNumber, squareInRow)
             surfColorPlt(Q0)
             surf3DPlt(Q0, squareInRow)
@@ -186,6 +197,7 @@ def discreteVSFormula(c, d1, d2, step, w):
     # d2: last separation distance
     # step: increment ammount
     # w: square plate width
+
     x = np.arange(d1, d2, step)
     cForm = (Eo * w**2)/(x)
     plt.figure(1)

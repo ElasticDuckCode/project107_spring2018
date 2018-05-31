@@ -14,7 +14,7 @@ def main():
     squareNumber = getNumberOfSquares()  # Obtain the number of squares wanted from the user
 
     # Problem 1
-    solveDiscrete(w, d0, v0, 1, squareNumber)
+    solveDiscrete(w, d0, v0, 1, squareNumber) # solve and plot surfaces
 
     # Problem 2
     d1 = 1e-3
@@ -24,11 +24,11 @@ def main():
     c = []
 
     while current <= d2:
-        c.append(solveDiscrete(w, current, v0, 0, squareNumber))
+        c.append(solveDiscrete(w, current, v0, 0, squareNumber)) # create list of all capacitances
         current += step
         print("Done! on step: ", current)
-    c = np.array(c)
+    c = np.array(c) # convert to list to array
 
-    discreteVSFormula(c, d1, d2, step, w)
+    discreteVSFormula(c, d1, d2, step, w) # plot graphs
 
 main()
