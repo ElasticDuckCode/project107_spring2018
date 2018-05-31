@@ -161,3 +161,38 @@ def surf3DPlt(A, squareInRow):
 #fig.colorbar(surf, shrink=0.5, aspect=5)
     plt.show()
 
+def solveDiscrete(w, d, v0, surfaceOn, squareNumber):
+    # graph: tells what graph to plot
+
+    squareInRow = int(squareNumber**(1/2))  # Set the number of sqares per row
+    dx = ((w**2) / squareNumber)**(1/2)  # Turns number of squares into dx distance
+    capCoord = calcCoord(squareInRow, squareInRow, 0, d, dx)  # calculate descritized coordinates (bottom surface)
+
+    v = getvVector(capCoord, squareNumber, v0, 0, d)
+    Z = getZMatrix(squareNumber, capCoord, dx)
+    Q = solveCharge(Z,v)
+    C = solveCapacitance(Q, v0, squareNumber)
+
+    if surfaceOn == 1:
+            Q0 = solveChargeMatrix(Q, squareNumber, squareInRow)
+            surfColorPlt(Q0)
+            surf3DPlt(Q0, squareInRow)
+
+    return C
+
+def discreteVSFormula(c, d1, d2, step, w):
+    # c: array of capacitances corresponding to various distances
+    # d1: first separation distance
+    # d2: last separation distance
+    # step: increment ammount
+    # w: square plate width
+    x = np.arange(d1, d2, step)
+    cForm = (Eo * w**2)/(x)
+    plt.figure(1)
+    #plt.subplot(211)
+    plt.plot(x, c, color='r', label=r'$Discrete$')
+    #plt.subplot(212)
+    plt.plot(x, cForm, color='g', label=r'$\frac{\epsilon_0 A}{d}$')
+    plt.legend(loc='best')
+    plt.show()
+    return
