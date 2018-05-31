@@ -3,6 +3,8 @@ import math
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 
+Eo = 8.85e-12
+
 def printTitle():
     print("\nWritten by Jake Millhiser and Lina Yi.",
           "\nECE 107 Project: Discrete Capacitance of Square Capacitor"
@@ -67,8 +69,19 @@ def calcCoord(x, y, zBot, zTop, dx):  # Calculates the discrete coordinates of t
     array = np.array(array) # return numpy array instead of list
     return array
 
-def getZMatrix():  # Creates the Z Matrix in descretized capacitance equation
+def getZMatrix(squareNumber, Coord, dx):  # Creates the Z Matrix in descretized capacitance equation
     # TODO Lina
+
+    Z = np.zeros(2*squareNumber,2*squareNumber)
+
+    for m in range(2*squareNumber):
+        for n in range (2*squareNumber):
+            if m == n:
+                dSn = (dx)**2
+                Z[m][n] = 1/(2*Eo*np.sqrt(np.pi*dSn))
+            else:
+                r = np.linalg.norm(Coord[m] - Coord[n])
+                Z[m][n] = 1/(4*(np.pi)*Eo*r)
     return Z
 
 def getvVector(Coord, squareNumber, v0, dBot, dTop):  # Creates the voltage vector of both the top and bottom surfaces.
@@ -84,7 +97,7 @@ def getvVector(Coord, squareNumber, v0, dBot, dTop):  # Creates the voltage vect
         if Coord[i][2] == dBot:
             v[i] = -v0 / 2
         if Coord[i][2] == dTop:
-            v[i] = v0 / 2
+            v[i] = v0 / 2 
     return v
 
 def solveCharge(Z, v):
