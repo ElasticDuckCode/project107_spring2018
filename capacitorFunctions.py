@@ -70,14 +70,12 @@ def calcCoord(x, y, zBot, zTop, dx):  # Calculates the discrete coordinates of t
     return array
 
 def getZMatrix(squareNumber, Coord, dx):  # Creates the Z Matrix in descretized capacitance equation
-    # TODO Lina
-
     Z = np.zeros(2*squareNumber,2*squareNumber)
+    dSn = (dx)**2
 
     for m in range(2*squareNumber):
         for n in range (2*squareNumber):
             if m == n:
-                dSn = (dx)**2
                 Z[m][n] = 1/(2*Eo*np.sqrt(np.pi*dSn))
             else:
                 r = np.linalg.norm(Coord[m] - Coord[n])
