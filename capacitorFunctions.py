@@ -97,7 +97,7 @@ def getvVector(Coord, squareNumber, v0, dBot, dTop):  # Creates the voltage vect
         if Coord[i][2] == dBot:
             v[i] = -v0 / 2
         if Coord[i][2] == dTop:
-            v[i] = v0 / 2 
+            v[i] = v0 / 2
     return v
 
 def solveCharge(Z, v):
