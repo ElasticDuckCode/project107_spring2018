@@ -4,7 +4,7 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 
-Eo = 8.85e-12
+Eo = 8.85e-12 # of free space
 
 def printTitle():
     print("\nWritten by Jake Millhiser and Lina Yi.",
