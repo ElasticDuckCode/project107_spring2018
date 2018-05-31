@@ -159,6 +159,9 @@ def surfColorPlt(A):
 
     plt.imshow(A, cmap='plasma',interpolation='gaussian')
     plt.colorbar()
+    plt.title('Top Layer Colormap of Charge Density')
+    plt.xlabel('nth square on column')
+    plt.ylabel('mth square in row')
     plt.show()
     return
 
@@ -171,6 +174,10 @@ def surf3DPlt(A, squareInRow):
     x = y = np.arange(squareInRow)
     x, y = np.meshgrid(x, y)
     surf =  ax.plot_surface(x,y,A, color='orange')
+    plt.title('Top Layer Charge Density Surface')
+    ax.set_xlabel('nth square on column')
+    ax.set_ylabel('mth square in row')
+    ax.set_zlabel('Charge on square[m][n]')
     plt.show()
     return
 
@@ -207,9 +214,12 @@ def discreteVSFormula(c, d1, d2, step, w):
     cForm = (Eo * w**2)/(x)
     plt.figure(1)
     #plt.subplot(211)
-    plt.plot(x, c, color='r', label=r'$Discrete$')
+    plt.plot(x, c, color='r', label='Discrete Values')
     #plt.subplot(212)
     plt.plot(x, cForm, color='g', label=r'$\frac{\epsilon_0 A}{d}$')
+    plt.xlabel('Separation Distance / m ')
+    plt.ylabel('Capacitance / F')
+    plt.title('Capacitance VS Separation Distance')
     plt.legend(loc='best')
     plt.show()
     return
