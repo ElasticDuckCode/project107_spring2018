@@ -15,6 +15,7 @@ def printTitle():
         imageLd = image.read()
         print(imageLd)
         image.close()
+    return
 
 
 def getNumberOfSquares():  # Obtains numerical input x from the user, and returns 4**x if valid. Otherwise returns 0
