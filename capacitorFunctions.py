@@ -2,6 +2,7 @@
 import math
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
 
 Eo = 8.85e-12
 
@@ -70,7 +71,7 @@ def calcCoord(x, y, zBot, zTop, dx):  # Calculates the discrete coordinates of t
     return array
 
 def getZMatrix(squareNumber, Coord, dx):  # Creates the Z Matrix in descretized capacitance equation
-    Z = np.zeros(2*squareNumber,2*squareNumber)
+    Z = np.zeros((2*squareNumber,2*squareNumber))
     dSn = (dx)**2
 
     for m in range(2*squareNumber):
@@ -115,4 +116,48 @@ def solveCharge(Z, v):
         q = Zinv.dot(v)
         return q
 
+def solveCapacitance(q, v0, squareNumber):
+    # q: charge vector
+    # v0: voltage applied to plates
+    # squareNumber: number of squares on a plate
+
+    Q = 0 # total charge on plate initally 0
+    for dankmemes in range(squareNumber):
+        Q = Q + q[dankmemes]
+    C = -Q/v0 # negate Q since we are summing charges on bottom plate rather than top
+    return C
+
+def solveChargeMatrix(q, squareNumber, squareInRow):
+    # q: charge vector
+    # squareNumber: number of squares on a surface
+    # squareInRow: number of squares in a row
+    #|7|8|9|
+    #|4|5|6| how our charges are aranged
+    #|1|2|3|
+    k = 0 # current vector index
+    Q = np.zeros((squareInRow, squareInRow))
+    for i in range(squareInRow-1, -1, -1): # from squareNumber-1 to 0
+        for j in range(squareInRow):
+            Q[i][j] = -q[k] # negate since bottom plate
+            k = k + 1 # increment to next charge
+    return Q
+
+def surfColorPlt(A):
+    # Heat Map
+    #A = np.random.random((size, size))
+    plt.imshow(A, cmap='plasma',interpolation='gaussian')
+    plt.colorbar()
+    plt.show()
+    return
+
+def surf3DPlt(A, squareInRow):
+# Surface Plot
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+
+    x = y = np.arange(squareInRow)
+    x, y = np.meshgrid(x, y)
+    surf =  ax.plot_surface(x,y,A, color='orange')
+#fig.colorbar(surf, shrink=0.5, aspect=5)
+    plt.show()
 
