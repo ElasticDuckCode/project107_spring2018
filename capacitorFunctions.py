@@ -173,11 +173,11 @@ def surf3DPlt(A, squareInRow):
     ax = fig.gca(projection='3d')
     x = y = np.arange(squareInRow)
     x, y = np.meshgrid(x, y)
-    surf =  ax.plot_surface(x,y,A, color='orange')
+    surf =  ax.plot_surface(x,y,A, color='blue')
     plt.title('Top Layer Charge Density Surface')
     ax.set_xlabel('nth square on column')
     ax.set_ylabel('mth square in row')
-    ax.set_zlabel('Charge on square[m][n]')
+    ax.set_zlabel('Charge on square / C')
     plt.show()
     return
 
