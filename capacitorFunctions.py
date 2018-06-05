@@ -136,6 +136,7 @@ def solveCapacitance(q, v0, squareNumber):
     for i in range(squareNumber):
         Q = Q + q[i]
     C = -Q/v0 # negate Q since we are summing charges on bottom plate rather than top
+    print(C, ' F  is the Capacitance')
     return C
 
 def solveChargeMatrix(q, squareNumber, squareInRow):
